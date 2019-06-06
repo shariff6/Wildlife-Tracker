@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import org.sql2o.*;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,6 +15,7 @@ public class EndangeredAnimalTest {
 
     @BeforeEach
     public void setUp() {
+        DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/wildlife_tracker_test", null, null);
         endangeredAnimalUnderTest = new EndangeredAnimal("name", "age", "health", false);
 
     }
