@@ -1,9 +1,10 @@
-import org.sql2o.*;
 import java.util.List;
+import org.sql2o.*;
 
 public class Animal {
     private String name;
     private Boolean endangered;
+    private int id;
 
     public Animal(String name, Boolean endangered) {
         this.setName(name);
@@ -12,6 +13,14 @@ public class Animal {
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -33,7 +42,7 @@ public class Animal {
       }
     }
     @Override
-    public Boolean equals(Object otherAnimal) {
+    public boolean equals(Object otherAnimal) {
       if (!(otherAnimal instanceof Animal)) {
         return false;
       } else {
@@ -68,6 +77,15 @@ public class Animal {
         .addParameter("id", this.id)
         .executeAndFetch(Sighting.class);
         }
+      }
+      public void update(Boolean endangered) {
+          try (Connection con = DB.sql2o.open()) {
+            String sql = "UPDATE animals SET endangered = :endangered  WHERE id = :id";
+            con.createQuery(sql)
+            .addParameter("endangered", endangered)
+            .addParameter("id", id)
+            .executeUpdate();
+          }
       }
     public void delete() {
       try(Connection con = DB.sql2o.open()) {

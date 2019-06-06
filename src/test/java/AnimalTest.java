@@ -1,26 +1,19 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.util.List;
-import org.sql2o.*;
 
 public class AnimalTest {
-
-    @Mock
-    private boolean mockEndangered;
 
     private Animal animalUnderTest;
 
     @BeforeEach
     public void setUp() {
-        initMocks(this);
-        animalUnderTest = new Animal("name", mockEndangered);
-        DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/wildlife_tracker_test", null, null);
+        animalUnderTest = new Animal("name", false);
     }
 
     @Test
@@ -48,13 +41,24 @@ public class AnimalTest {
     @Test
     public void testGetSightings() {
         // Setup
-        final List<Sighting> expectedResult = null;
+        final List<Sighting> expectedResult = Arrays.asList();
 
         // Run the test
         final List<Sighting> result = animalUnderTest.getSightings();
 
         // Verify the results
         assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void testUpdate() {
+        // Setup
+        final Boolean endangered = false;
+
+        // Run the test
+        animalUnderTest.update(endangered);
+
+        // Verify the results
     }
 
     @Test
@@ -70,7 +74,7 @@ public class AnimalTest {
     @Test
     public void testAll() {
         // Setup
-        final List<Animal> expectedResult = null;
+        final List<Animal> expectedResult = Arrays.asList();
 
         // Run the test
         final List<Animal> result = Animal.all();
